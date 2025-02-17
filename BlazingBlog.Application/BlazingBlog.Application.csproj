@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BlazingBlog.Domain\BlazingBlog.Domain.csproj" />
+        <PackageReference Include="Mapster"/>
+        <PackageReference Include="MediatR"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BlazingBlog.Domain\BlazingBlog.Domain.csproj"/>
     </ItemGroup>
 
 </Project>
