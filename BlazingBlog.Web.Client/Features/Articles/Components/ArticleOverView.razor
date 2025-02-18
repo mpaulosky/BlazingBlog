@@ -1,0 +1,109 @@
+@page "/article-overview"
+@using Microsoft.AspNetCore.Authorization
+
+@rendermode @(new InteractiveAutoRenderMode(false))
+
+@inject NavigationManager NavigationManager
+@inject IArticlesOverviewService ArticlesOverviewService
+@attribute [Authorize]
+
+
+<PageTitle>Article OverView</PageTitle>
+
+<div class="space-y-6">
+	<h2 class="text-3xl font-extrabold dark:text-gray-50">My Articles</h2>
+
+	@if (_articles is null)
+	{
+		<span>Loading articles...</span>
+	}
+	else if (_articles.Count == 0)
+	{
+		<span>You have written no articles, yet!</span>
+	}
+	else
+	{
+
+		<QuickGrid Items="_articles.AsQueryable()" PageSize="10" ShowPager="true">
+			<PropertyColumn Property="@(a => a.Title)" Sortable="true"/>
+			<TemplateColumn Title="Published">
+				@if (context.IsPublished)
+				{
+					<span class="flex justify-center">✔️</span>
+				}
+				else
+				{
+					<span class="flex justify-center">❌</span>
+				}
+			</TemplateColumn>
+			<TemplateColumn Title="Published On">
+				@if (context.IsPublished)
+				{
+					<span class="flex justify-center">@context.PublishedOn?.ToString("MM/dd/yyyy")</span>
+				}
+				else
+				{
+					<span></span>
+				}
+			</TemplateColumn>
+			<TemplateColumn>
+
+				<button @onclick="() => EditArticle(context.Id)"
+				        class="p-1 text-sm font-bold uppercase rounded bg-blue-400 
+                       text-gray-900 inline-block hover:text-blue-700">
+					✏ Edit
+				</button>
+				<button @onclick="() => TogglePublishArticle(context.Id)"
+				        class="p-1 text-sm font-bold uppercase rounded bg-blue-400 
+                       text-gray-900 inline-block hover:text-blue-700">
+					@(context.IsPublished ? "🔒 Unpublish" : "🔓 Publish")
+				</button>
+			</TemplateColumn>
+		</QuickGrid>
+
+	}
+
+</div>
+
+@code {
+
+	private List<ArticleResponse>? _articles;
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		_articles = await ArticlesOverviewService.GetArticlesByCurrentUserAsync() ?? [];
+
+	}
+
+	private async Task TogglePublishArticle(int id)
+	{
+
+		var updatedArticle = await ArticlesOverviewService.TogglePublishArticleAsync(id);
+
+		if (updatedArticle is not null && _articles is not null)
+		{
+
+			var index = _articles.FindIndex(a => a.Id == id);
+
+			if (index != -1)
+			{
+
+				_articles[index] = (ArticleResponse)updatedArticle;
+
+				StateHasChanged();
+
+			}
+
+		}
+
+	}
+
+	private void EditArticle(int id)
+	{
+
+		NavigationManager.NavigateTo($"/article-editor/{id}");
+
+	}
+
+}
