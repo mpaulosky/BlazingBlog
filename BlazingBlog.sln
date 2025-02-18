@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain", "Blazi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Infrastructure", "BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj", "{40BCF01D-B92A-4402-9758-58E09C8C73E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Migration", "BlazingBlog.Migration\BlazingBlog.Migration.csproj", "{C4D6F569-B8F5-4721-A84D-366971023C14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Postgres.Migration", "BlazingBlog.Postgres.Migration\BlazingBlog.Postgres.Migration.csproj", "{C4D6F569-B8F5-4721-A84D-366971023C14}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Web.Server", "BlazingBlog.Web.Server\BlazingBlog.Web.Server.csproj", "{4D8F9672-9C39-4D34-BCCA-F369083EC083}"
 EndProject
