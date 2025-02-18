@@ -14,8 +14,8 @@ public abstract class Entity
 
 	public int Id { get; set; }
 
-	public DateTime CreatedOn { get; set; } = DateTime.Now;
+	public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
 
-	public DateTime? ModifiedOn { get; set; }
+	public DateTimeOffset? ModifiedOn { get; set; }
 
 }
