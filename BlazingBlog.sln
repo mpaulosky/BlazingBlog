@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		docs\CODE_OF_CONDUCT.md = docs\CODE_OF_CONDUCT.md
 		docs\CONTRIBUTING.md = docs\CONTRIBUTING.md
 		.github\workflows\dotnet-build.yml = .github\workflows\dotnet-build.yml
+		Directory.Packages.props = Directory.Packages.props
 	EndProjectSection
 EndProject
 Global
