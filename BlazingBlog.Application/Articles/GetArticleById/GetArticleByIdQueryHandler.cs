@@ -12,25 +12,25 @@ namespace BlazingBlog.Application.Articles.GetArticleById;
 public class GetArticleByIdQueryHandler : IQueryHandler<GetArticleByIdQuery, ArticleResponse?>
 {
 
-	private readonly IArticleService _ArticleService;
+	private readonly IArticleService _articleService;
 
-	private readonly IUserRepository _UserRepository;
+	private readonly IUserRepository _userRepository;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public GetArticleByIdQueryHandler(IArticleService articleService, IUserRepository userRepository, IUserService userService)
 	{
 
-		_ArticleService = articleService;
-		_UserRepository = userRepository;
-		_UserService = userService;
+		_articleService = articleService;
+		_userRepository = userRepository;
+		_userService = userService;
 
 	}
 
 	public async Task<Result<ArticleResponse?>> Handle(GetArticleByIdQuery request, CancellationToken cancellationToken)
 	{
 
-		var article = await _ArticleService.GetArticleByIdAsync(request.Id);
+		var article = await _articleService.GetArticleByIdAsync(request.Id);
 
 		if (article is null) return Result.Fail<ArticleResponse?>("The article does not exist.");
 
@@ -39,13 +39,13 @@ public class GetArticleByIdQueryHandler : IQueryHandler<GetArticleByIdQuery, Art
 		if (article.UserId is not null)
 		{
 
-			var author = await _UserRepository.GetUserByIdAsync(article.UserId);
+			var author = await _userRepository.GetUserByIdAsync(article.UserId);
 
 			articleResponse.UserName = author?.UserName ?? "Unknown";
 
 			articleResponse.UserId = article.UserId;
 
-			articleResponse.CanEdit = await _UserService
+			articleResponse.CanEdit = await _userService
 					.CurrentUserCanEditArticlesAsync(article.Id);
 
 		}

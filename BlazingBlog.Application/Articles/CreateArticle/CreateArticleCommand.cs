@@ -16,7 +16,7 @@ public class CreateArticleCommand : ICommand<ArticleResponse>
 
 	public string? Content { get; set; }
 
-	public DateTime PublishedOn { get; set; } = DateTime.Now;
+	public DateTimeOffset? PublishedOn { get; set; } = DateTime.Now;
 
 	public bool IsPublished { get; set; } = false;
 

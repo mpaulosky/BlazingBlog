@@ -12,17 +12,17 @@ namespace BlazingBlog.Application.Articles.CreateArticle;
 public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand, ArticleResponse>
 {
 
-	private readonly IArticleService _ArticleService;
+	private readonly IArticleService _articleService;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public CreateArticleCommandHandler(
 			IArticleService articleService,
 			IUserService userService)
 	{
 
-		_ArticleService = articleService;
-		_UserService = userService;
+		_articleService = articleService;
+		_userService = userService;
 
 	}
 
@@ -34,9 +34,9 @@ public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand,
 
 			var newArticle = request.Adapt<Article>();
 
-			newArticle.UserId = await _UserService.GetCurrentUserIdAsync();
+			newArticle.UserId = await _userService.GetCurrentUserIdAsync();
 
-			if (!await _UserService.CurrentUserCanCreateArticlesAsync())
+			if (!await _userService.CurrentUserCanCreateArticlesAsync())
 			{
 
 				return FailingResult();
@@ -44,7 +44,7 @@ public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand,
 			}
 
 
-			var article = await _ArticleService.CreateAsync(newArticle);
+			var article = await _articleService.CreateAsync(newArticle);
 
 			return article.Adapt<ArticleResponse>();
 

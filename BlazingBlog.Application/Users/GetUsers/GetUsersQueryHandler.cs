@@ -12,28 +12,28 @@ namespace BlazingBlog.Application.Users.GetUsers;
 public class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, List<UserResponse>>
 {
 
-	private readonly IUserRepository _UserRepository;
+	private readonly IUserRepository _userRepository;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public GetUsersQueryHandler(IUserRepository userRepository, IUserService userService)
 	{
-		_UserRepository = userRepository;
-		_UserService = userService;
+		_userRepository = userRepository;
+		_userService = userService;
 	}
 
 	public async Task<Result<List<UserResponse>>> Handle(GetUsersQuery request,
 			CancellationToken cancellationToken)
 	{
 
-		if (!await _UserService.IsCurrentUserInRoleAsync("Admin"))
+		if (!await _userService.IsCurrentUserInRoleAsync("Admin"))
 		{
 
 			return Result.Fail<List<UserResponse>>("You're not allowed to see all users.");
 
 		}
 
-		var users = await _UserRepository.GetAllUsersAsync();
+		var users = await _userRepository.GetAllUsersAsync();
 
 		var response = new List<UserResponse>();
 
@@ -42,7 +42,7 @@ public class GetUsersQueryHandler : IQueryHandler<GetUsersQuery, List<UserRespon
 
 			var userResponse = user.Adapt<UserResponse>();
 
-			userResponse.Roles = string.Join(", ", await _UserService.GetUserRolesAsync(user.Id));
+			userResponse.Roles = string.Join(", ", await _userService.GetUserRolesAsync(user.Id));
 
 			response.Add(userResponse);
 

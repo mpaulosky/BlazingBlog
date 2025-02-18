@@ -24,7 +24,7 @@ public static class DependencyInjection
 
 		});
 
-		services.AddScoped<IArticlesOverviewService, ArticlesesOverviewService>();
+		services.AddScoped<IArticlesOverviewService, ArticlesOverviewService>();
 
 		return services;
 

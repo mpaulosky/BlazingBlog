@@ -11,12 +11,12 @@ namespace BlazingBlog.Application.Users.AddRoleToUser;
 
 public class AddRoleToUserCommandHandler : ICommandHandler<AddRoleToUserCommand>
 {
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public AddRoleToUserCommandHandler(IUserService userService)
 	{
 
-		_UserService = userService;
+		_userService = userService;
 
 	}
 
@@ -26,7 +26,7 @@ public class AddRoleToUserCommandHandler : ICommandHandler<AddRoleToUserCommand>
 		try
 		{
 
-			await _UserService.AddRoleToUserAsync(request.UserId, request.RoleName);
+			await _userService.AddRoleToUserAsync(request.UserId, request.RoleName);
 
 			return Result.Ok();
 

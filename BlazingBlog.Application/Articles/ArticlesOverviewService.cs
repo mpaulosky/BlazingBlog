@@ -1,6 +1,6 @@
 // =======================================================
 // Copyright (c) 2025. All rights reserved.
-// File Name :     ArticlesesOverviewService.cs
+// File Name :     ArticlesOverviewService.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazingBlog
@@ -9,31 +9,31 @@
 
 namespace BlazingBlog.Application.Articles;
 
-public class ArticlesesOverviewService : IArticlesOverviewService
+public class ArticlesOverviewService : IArticlesOverviewService
 {
 
-	private readonly ISender _Sender;
+	private readonly ISender _sender;
 
-	public ArticlesesOverviewService(ISender sender)
+	public ArticlesOverviewService(ISender sender)
 	{
 
-		_Sender = sender;
+		_sender = sender;
 
 	}
 
 	public async Task<ArticleResponse?> TogglePublishArticleAsync(int articleId)
 	{
 
-		var result = await _Sender.Send(new TogglePublishArticleCommand() { ArticleId = articleId });
+		var result = await _sender.Send(new TogglePublishArticleCommand() { ArticleId = articleId });
 
 		return result;
 
 	}
 
-	public async Task<List<ArticleResponse>> GetArticlesByCurrentUserAsync()
+	public async Task<List<ArticleResponse>?> GetArticlesByCurrentUserAsync()
 	{
 
-		var result = await _Sender.Send(new GetArticlesByCurrentUserQuery());
+		var result = await _sender.Send(new GetArticlesByCurrentUserQuery());
 
 		return result;
 

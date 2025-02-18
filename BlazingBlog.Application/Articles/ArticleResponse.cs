@@ -14,7 +14,7 @@ public record struct ArticleResponse
 		int Id,
 		string Title,
 		string? Content,
-		DateTime PublishedOn,
+		DateTimeOffset? PublishedOn,
 		bool IsPublished,
 		string UserName,
 		string UserId,

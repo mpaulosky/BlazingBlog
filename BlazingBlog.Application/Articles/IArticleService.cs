@@ -14,7 +14,7 @@ public interface IArticleService
 
 	Task<Article?> GetArticleByIdAsync(int id);
 
-	Task<List<Article>> GetArticlesByUserAsync(string userId);
+	Task<List<Article>?> GetArticlesByUserAsync(string userId);
 
 	Task<List<Article>> GetAllAsync();
 

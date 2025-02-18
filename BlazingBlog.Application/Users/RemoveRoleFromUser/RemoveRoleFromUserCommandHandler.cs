@@ -12,12 +12,12 @@ namespace BlazingBlog.Application.Users.RemoveRoleFromUser;
 public class RemoveRoleFromUserCommandHandler : ICommandHandler<RemoveRoleFromUserCommand>
 {
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public RemoveRoleFromUserCommandHandler(IUserService userService)
 	{
 
-		_UserService = userService;
+		_userService = userService;
 
 	}
 
@@ -27,7 +27,7 @@ public class RemoveRoleFromUserCommandHandler : ICommandHandler<RemoveRoleFromUs
 		try
 		{
 
-			await _UserService.RemoveRoleFromUserAsync(request.UserId, request.RoleName);
+			await _userService.RemoveRoleFromUserAsync(request.UserId, request.RoleName);
 
 			return Result.Ok();
 

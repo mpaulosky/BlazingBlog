@@ -12,19 +12,19 @@ namespace BlazingBlog.Application.Users.RegisterUser;
 public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 {
 
-	private readonly IAuthenticationService _AuthenticationService;
+	private readonly IAuthenticationService _authenticationService;
 
 	public RegisterUserCommandHandler(IAuthenticationService authenticationService)
 	{
 
-		_AuthenticationService = authenticationService;
+		_authenticationService = authenticationService;
 
 	}
 
 	public async Task<Result> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
 	{
 
-		var result = await _AuthenticationService.RegisterUserAsync(
+		var result = await _authenticationService.RegisterUserAsync(
 				request.UserName,
 				request.Email,
 				request.Password

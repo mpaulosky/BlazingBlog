@@ -12,30 +12,30 @@ namespace BlazingBlog.Application.Articles.DeleteArticle;
 public class DeleteArticleCommandHandler : ICommandHandler<DeleteArticleCommand>
 {
 
-	private readonly IArticleService _ArticleService;
+	private readonly IArticleService _articleService;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 
 	public DeleteArticleCommandHandler(IArticleService articleService, IUserService userService)
 	{
 
-		_ArticleService = articleService;
-		_UserService = userService;
+		_articleService = articleService;
+		_userService = userService;
 
 	}
 
 	public async Task<Result> Handle(DeleteArticleCommand request, CancellationToken cancellationToken)
 	{
 
-		if (!await _UserService.CurrentUserCanEditArticlesAsync(request.Id))
+		if (!await _userService.CurrentUserCanEditArticlesAsync(request.Id))
 		{
 
 			return Result.Fail<ArticleResponse?>("You are not authorized to delete this article. How did you get here?");
 
 		}
 
-		var deleted = await _ArticleService.DeleteArticleAsync(request.Id);
+		var deleted = await _articleService.DeleteArticleAsync(request.Id);
 
 		if (deleted) return Result.Ok();
 

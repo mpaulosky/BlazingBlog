@@ -12,27 +12,27 @@ namespace BlazingBlog.Application.Articles.TogglePublishArticle;
 public class TogglePublishArticleCommandHandler : ICommandHandler<TogglePublishArticleCommand, ArticleResponse?>
 {
 
-	private readonly IArticleService _ArticleService;
+	private readonly IArticleService _articleService;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public TogglePublishArticleCommandHandler(IArticleService articleService, IUserService userService)
 	{
-		_ArticleService = articleService;
-		_UserService = userService;
+		_articleService = articleService;
+		_userService = userService;
 	}
 
 	public async Task<Result<ArticleResponse?>> Handle(TogglePublishArticleCommand request, CancellationToken cancellationToken)
 	{
 
-		if (!await _UserService.CurrentUserCanEditArticlesAsync(request.ArticleId))
+		if (!await _userService.CurrentUserCanEditArticlesAsync(request.ArticleId))
 		{
 
 			return Result.Fail<ArticleResponse?>("You are not authorized to edit this article. How did you get here?");
 
 		}
 
-		var articleToUpdate = await _ArticleService.GetArticleByIdAsync(request.ArticleId);
+		var articleToUpdate = await _articleService.GetArticleByIdAsync(request.ArticleId);
 
 		if (articleToUpdate is null)
 		{
@@ -46,7 +46,7 @@ public class TogglePublishArticleCommandHandler : ICommandHandler<TogglePublishA
 		if(articleToUpdate.IsPublished)
 			articleToUpdate.PublishedOn=DateTime.Now;
 
-		var article = await _ArticleService.UpdateArticleAsync(articleToUpdate);
+		var article = await _articleService.UpdateArticleAsync(articleToUpdate);
 
 		if (article is null)
 		{

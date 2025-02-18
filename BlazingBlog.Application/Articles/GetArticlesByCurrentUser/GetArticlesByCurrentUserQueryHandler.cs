@@ -12,24 +12,24 @@ namespace BlazingBlog.Application.Articles.GetArticlesByCurrentUser;
 public class GetArticlesByCurrentUserQueryHandler : IQueryHandler<GetArticlesByCurrentUserQuery, List<ArticleResponse>>
 {
 
-	private readonly IArticleService _ArticleService;
+	private readonly IArticleService _articleService;
 
-	private readonly IUserService _UserService;
+	private readonly IUserService _userService;
 
 	public GetArticlesByCurrentUserQueryHandler(IArticleService articleService, IUserService userService)
 	{
 
-		_ArticleService = articleService;
-		_UserService = userService;
+		_articleService = articleService;
+		_userService = userService;
 
 	}
 
 	public async Task<Result<List<ArticleResponse>>> Handle(GetArticlesByCurrentUserQuery request, CancellationToken cancellationToken)
 	{
 
-		var userId = await _UserService.GetCurrentUserIdAsync();
+		var userId = await _userService.GetCurrentUserIdAsync();
 
-		var articles = await _ArticleService.GetArticlesByUserAsync(userId);
+		var articles = await _articleService.GetArticlesByUserAsync(userId);
 
 		var response = articles.Adapt<List<ArticleResponse>>();
 
