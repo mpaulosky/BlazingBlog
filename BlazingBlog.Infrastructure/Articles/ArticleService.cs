@@ -30,7 +30,7 @@ public class ArticleService : IArticleService
 
 	}
 
-	public async Task<List<Article>> GetArticlesByUserAsync(string userId)
+	public async Task<List<Article>?> GetArticlesByUserAsync(string userId)
 	{
 
 		if (string.IsNullOrWhiteSpace(userId)) return null;
