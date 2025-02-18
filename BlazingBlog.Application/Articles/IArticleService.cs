@@ -1,15 +1,15 @@
 // =======================================================
 // Copyright (c) 2025. All rights reserved.
-// File Name :     IArticleRepository.cs
+// File Name :     IArticleService.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazingBlog
-// Project Name :  BlazingBlog.Domain
+// Project Name :  BlazingBlog.Application
 // =======================================================
 
-namespace BlazingBlog.Domain.Article;
+namespace BlazingBlog.Application.Articles;
 
-public interface IArticleRepository
+public interface IArticleService
 {
 
 	Task<Article?> GetArticleByIdAsync(int id);

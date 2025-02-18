@@ -1,19 +1,17 @@
 // =======================================================
 // Copyright (c) 2025. All rights reserved.
-// File Name :     IUserRepository.cs
+// File Name :     GetUsersQuery.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazingBlog
-// Project Name :  BlazingBlog.Domain
+// Project Name :  BlazingBlog.Application
 // =======================================================
 
-namespace BlazingBlog.Domain.Users;
+namespace BlazingBlog.Application.Users.GetUsers;
 
-public interface IUserRepository
+public class GetUsersQuery : IQuery<List<UserResponse>>
 {
 
-	Task<List<IUser>> GetAllUsersAsync();
 
-	Task<IUser?> GetUserByIdAsync(string userId);
 
 }

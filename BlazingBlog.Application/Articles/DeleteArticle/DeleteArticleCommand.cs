@@ -1,21 +1,17 @@
 // =======================================================
 // Copyright (c) 2025. All rights reserved.
-// File Name :     Entity.cs
+// File Name :     DeleteArticleCommand.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazingBlog
-// Project Name :  BlazingBlog.Domain
+// Project Name :  BlazingBlog.Application
 // =======================================================
 
-namespace BlazingBlog.Domain.Abstractions;
+namespace BlazingBlog.Application.Articles.DeleteArticle;
 
-public abstract class Entity
+public class DeleteArticleCommand : ICommand
 {
 
 	public int Id { get; set; }
-
-	public DateTime CreatedOn { get; set; } = DateTime.Now;
-
-	public DateTime? ModifiedOn { get; set; }
 
 }
