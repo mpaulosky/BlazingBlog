@@ -22,7 +22,8 @@ jobs:
       - name: Fetch all history for all tags and branches
         run: |
           git fetch --prune --unshallow
-
+      - name: Check .NET SDK versions
+        run: dotnet --list-sdks
       - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v4
         with:
