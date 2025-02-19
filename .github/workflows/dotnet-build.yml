@@ -35,7 +35,7 @@ jobs:
         run: dotnet build --configuration Release --no-restore
         
       - name: Run Tests
-        run: dotnet test UnitTests.sln --no-build --logger trx --results-directory "test-results"
+        run: dotnet test --no-build --logger trx --results-directory "test-results"
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
