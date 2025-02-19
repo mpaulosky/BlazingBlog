@@ -7,17 +7,18 @@
 ****
 
 [![Built With .NET](https://img.shields.io/badge/Built_With_.NET-512BD4?style=plastic&logo=DotNet&logoColor=white)](https://dot.net)
+![GitHub](https://img.shields.io/github/license/mpaulosky/BlazingBlog?logo=github)
+[![.NET Build](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet-build.yml/badge.svg?branch=main)](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet-build.yml)
+
 [![Issues Open](https://img.shields.io/github/issues/mpaulosky/BlazingBlog.svg?style=flatsquare&logo=github&label=Open%20Issues)](https://github.com/mpaulosky/BlazingBlog/issues)
 ![GitHub closed issues](https://img.shields.io/github/issues-closed/mpaulosky/BlazingBlog?logo=github)
-![GitHub](https://img.shields.io/github/license/mpaulosky/BlazingBlog?logo=github)
+[![codecov](https://codecov.io/gh/mpaulosky/BlazingBlog/branch/main/graph/badge.svg)](https://codecov.io/gh/mpaulosky/BlazingBlog)
 
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/mpaulosky/BlazingBlog?label=pull%20requests%20main&logo=github)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/mpaulosky/BlazingBlog?logo=github)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/mpaulosky/BlazingBlog/main?label=last%20commit%20main&logo=github)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/mpaulosky/BlazingBlog/dev?label=last%20commit%20dev&logo=github)
 
-![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/mpaulosky/BlazingBlog/dotnet.yml?branch=main&label=Build%20%26%20Test%20main&logo=github)
-[![codecov](https://codecov.io/gh/mpaulosky/BlazingBlog/branch/main/graph/badge.svg)](https://codecov.io/gh/mpaulosky/BlazingBlog)
+
 
 ****
 
