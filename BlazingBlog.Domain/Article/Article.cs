@@ -18,8 +18,8 @@ public class Article : Entity
 
 	public DateTimeOffset? PublishedOn { get; set; } = DateTime.Now;
 
-	public bool IsPublished { get; set; } = false;
+	public bool IsPublished { get; set; }
 
-	public string? UserId { get; set; } = null;
+	public string? UserId { get; set; }
 
 }
