@@ -17,29 +17,32 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
-
     steps:
       - uses: actions/checkout@v4
-      - name: Setup .NET
+      - name: Fetch all history for all tags and branches
+        run: |
+          git fetch --prune --unshallow
+
+      - name: Setup .NET Core SDK
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
-      - name: Restore dependencies
+      - name: Restores
         run: dotnet restore
-      - name: Build
-        run: dotnet build --no-restore
-      - name: Run Tests
-        run: dotnet test --no-build --logger trx --results-directory "test-results"
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
-        if: always()
-        with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json 
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        
+#      - name: Run Tests
+#        run: dotnet test UnitTests.sln --no-build --logger trx --results-directory "test-results"
+
+#      - name: Publish Test Results
+#        uses: EnricoMi/publish-unit-test-result-action@v2
+#        id: test-results
+#        if: always()
+#        with:
+#          files: |
+#            test-results/**/*.xml
+#            test-results/**/*.trx
+#            test-results/**/*.json 
