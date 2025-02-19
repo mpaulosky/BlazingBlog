@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET Build
+name: Build and test
 
 on:
   push:
@@ -34,15 +34,15 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         
-#      - name: Run Tests
-#        run: dotnet test UnitTests.sln --no-build --logger trx --results-directory "test-results"
+      - name: Run Tests
+        run: dotnet test --no-build --logger trx --results-directory "test-results"
 
-#      - name: Publish Test Results
-#        uses: EnricoMi/publish-unit-test-result-action@v2
-#        id: test-results
-#        if: always()
-#        with:
-#          files: |
-#            test-results/**/*.xml
-#            test-results/**/*.trx
-#            test-results/**/*.json 
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json 
