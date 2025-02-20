@@ -1,0 +1,8 @@
+{
+  "solution": {
+    "path": "BlazingBlog.sln",
+    "projects": [
+      "tests\\BlazingBlog.Domain.Tests.Unit\\BlazingBlog.Domain.Tests.Unit.csproj"
+    ]
+  }
+}

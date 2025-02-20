@@ -4,18 +4,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{5156C0D5-D701-4BB3-941F-90DDA45B6660}"
+	ProjectSection(SolutionItems) = preProject
+		src\README.md = src\README.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application", "BlazingBlog.Application\BlazingBlog.Application.csproj", "{828D6580-328F-46B6-90E6-8BECB8D1FE96}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application", "src\BlazingBlog.Application\BlazingBlog.Application.csproj", "{828D6580-328F-46B6-90E6-8BECB8D1FE96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain", "BlazingBlog.Domain\BlazingBlog.Domain.csproj", "{A9AE155C-1560-4B40-96E2-6123646CB74C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain", "src\BlazingBlog.Domain\BlazingBlog.Domain.csproj", "{A9AE155C-1560-4B40-96E2-6123646CB74C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Infrastructure", "BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj", "{40BCF01D-B92A-4402-9758-58E09C8C73E6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Infrastructure", "src\BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj", "{40BCF01D-B92A-4402-9758-58E09C8C73E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Postgres.Migration", "BlazingBlog.Postgres.Migration\BlazingBlog.Postgres.Migration.csproj", "{C4D6F569-B8F5-4721-A84D-366971023C14}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Postgres.Migration", "src\BlazingBlog.Postgres.Migration\BlazingBlog.Postgres.Migration.csproj", "{C4D6F569-B8F5-4721-A84D-366971023C14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Web.Server", "BlazingBlog.Web.Server\BlazingBlog.Web.Server.csproj", "{4D8F9672-9C39-4D34-BCCA-F369083EC083}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Web.Server", "src\BlazingBlog.Web.Server\BlazingBlog.Web.Server.csproj", "{4D8F9672-9C39-4D34-BCCA-F369083EC083}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Web.Client", "BlazingBlog.Web.Client\BlazingBlog.Web.Client.csproj", "{38DA21B7-3588-412C-8223-BABBE2F10101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Web.Client", "src\BlazingBlog.Web.Client\BlazingBlog.Web.Client.csproj", "{38DA21B7-3588-412C-8223-BABBE2F10101}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{9B64144D-81AE-40A5-AC81-A4459A3D7ACD}"
 	ProjectSection(SolutionItems) = preProject
@@ -24,17 +27,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		global.json = global.json
 		LICENSE = LICENSE
 		README.md = README.md
-		docs\CODE_OF_CONDUCT.md = docs\CODE_OF_CONDUCT.md
-		docs\CONTRIBUTING.md = docs\CONTRIBUTING.md
 		Directory.Packages.props = Directory.Packages.props
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
-		.github\workflows\formatting.yml = .github\workflows\formatting.yml
-		.github\workflows\todos-to-issues.yml = .github\workflows\todos-to-issues.yml
+		.all-contributorsrc = .all-contributorsrc
+		codecov.yml = codecov.yml
+		nuget.config = nuget.config
+		REFERENCES.md = REFERENCES.md
+		UnitTests.slnf = UnitTests.slnf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{052616D2-4180-42E3-8224-A2CD548FA9A1}"
+	ProjectSection(SolutionItems) = preProject
+		tests\README.md = tests\README.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain.Tests.Unit", "BlazingBlog.Domain.Tests.Unit\BlazingBlog.Domain.Tests.Unit.csproj", "{6B992BAF-4152-44BF-BAB5-57E51A7B89DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Domain.Tests.Unit", "tests\BlazingBlog.Domain.Tests.Unit\BlazingBlog.Domain.Tests.Unit.csproj", "{6B992BAF-4152-44BF-BAB5-57E51A7B89DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{714C1518-2953-42A7-864F-1E325790EB05}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{3479BB95-4F89-431E-B6E8-A9ACBF3629B8}"
+	ProjectSection(SolutionItems) = preProject
+		docs\CODE_OF_CONDUCT.md = docs\CODE_OF_CONDUCT.md
+		docs\CONTRIBUTING.md = docs\CONTRIBUTING.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{9037B8E9-7E50-4E01-B70A-9E4D319F0504}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\formatting.yml = .github\workflows\formatting.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +75,9 @@ Global
 		{4D8F9672-9C39-4D34-BCCA-F369083EC083} = {5156C0D5-D701-4BB3-941F-90DDA45B6660}
 		{38DA21B7-3588-412C-8223-BABBE2F10101} = {5156C0D5-D701-4BB3-941F-90DDA45B6660}
 		{6B992BAF-4152-44BF-BAB5-57E51A7B89DD} = {052616D2-4180-42E3-8224-A2CD548FA9A1}
+		{714C1518-2953-42A7-864F-1E325790EB05} = {9B64144D-81AE-40A5-AC81-A4459A3D7ACD}
+		{3479BB95-4F89-431E-B6E8-A9ACBF3629B8} = {9B64144D-81AE-40A5-AC81-A4459A3D7ACD}
+		{9037B8E9-7E50-4E01-B70A-9E4D319F0504} = {714C1518-2953-42A7-864F-1E325790EB05}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{828D6580-328F-46B6-90E6-8BECB8D1FE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

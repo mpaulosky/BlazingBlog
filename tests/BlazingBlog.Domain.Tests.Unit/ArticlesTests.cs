@@ -7,6 +7,7 @@
 // Project Name :  BlazingBlog.Domain.Tests.Unit
 // =======================================================
 
+// ReSharper disable once CheckNamespace
 namespace BlazingBlog.Domain.Article;
 
 [ExcludeFromCodeCoverage]

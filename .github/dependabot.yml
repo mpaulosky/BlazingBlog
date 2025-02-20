@@ -1,0 +1,59 @@
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+---
+
+version: 2
+updates:
+  
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "16:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "github-actions"
+      - "dependencies"
+    reviewers:
+      - "mpaulosky"
+    groups:
+      all-actions:
+        patterns: [ "*" ]
+
+  # Maintain dependencies for nuget
+  - package-ecosystem: "nuget"
+    directory: "/nuget/helpers/lib/NuGetUpdater"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "16:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "nuget"
+      - "dependencies"
+    reviewers:
+      - "mpaulosky"
+    groups:
+      all-actions:
+        patterns: [ "*" ]
+
+  #Maintain DotNet Sdk
+  - package-ecosystem: "dotnet-sdk"
+    directory: "/nuget/helpers/lib/NuGetUpdater"
+    schedule:
+      interval: "weekly"
+      day: "sunday"
+      time: "16:00"
+    open-pull-requests-limit: 10
+    labels:
+      - "dotnet-sdk"
+      - "dependencies"
+    reviewers:
+      - "mpaulosky"
+    groups:
+      all-actions:
+        patterns: [ "*" ]
