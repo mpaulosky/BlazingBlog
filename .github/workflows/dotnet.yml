@@ -1,0 +1,91 @@
+---
+name: "Build and Test .NET projects"
+
+on:
+  push:
+    branches: [ "main" ]
+
+  pull_request:
+    branches: [ "*" ]
+  
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "The reason for running the workflow"
+        required: true
+        default: "Manual run"
+
+jobs:
+  build-and-test:
+    name: Build-and-Test=${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+      DOTNET_NOLOGO: true
+      DOTNET_GENERATE_ASPNET_CERTIFICATE: false
+      DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
+      DOTNET_MULTILEVEL_LOOKUP: 0
+      BUILD_CONFIG: 'Release --no-restore'
+      SOLUTION: 'BlazingBlog.sln'
+      REPORT_NAME: 'BlazingBlog-Test-Results'
+    
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch all history for all tags and branches
+        run: |
+          git fetch --prune --unshallow
+
+      - name: 'Print manual run reason'
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          echo 'Reason: ${{ github.event.inputs.reason }}'
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Workload install
+        run: dotnet workload restore
+
+      - name: Restores
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration $BUILD_CONFIG
+
+      - name: Test
+        run: dotnet test --configuration $BUILD_CONFIG --no-build --logger trx --results-directory "test-results"
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.1.1
+        with:
+          versionSpec: "6.x"
+
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v3.1.1
+      - run: |
+          echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5.1.2
+
+        # Use always() to always run this step to
+        # publish test results when there are test failures
+        if: ${{ always() }}
