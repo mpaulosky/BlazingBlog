@@ -62,7 +62,10 @@ jobs:
       - name: Test
         run: dotnet test --configuration $BUILD_CONFIG --no-build --logger trx --results-directory "test-results"
 
-      - name: Publish Test Results
+      - name: Publish Test
+        permissions:
+          checks: write
+          pull-requests: write
         uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         if: always()
