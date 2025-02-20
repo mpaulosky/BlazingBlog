@@ -25,7 +25,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\BlazingBlog.Domain\BlazingBlog.Domain.csproj" />
-      <ProjectReference Include="..\BlazingBlog.Domain\BlazingBlog.Domain.csproj" />
     </ItemGroup>
 
 </Project>
