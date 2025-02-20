@@ -50,32 +50,20 @@ jobs:
             test-results/**/*.trx
             test-results/**/*.json
 
-      - name: Upload Event File
-        uses: actions/upload-artifact@v4
-        with:
-          name: Event File
-          path: ${{ github.event_path }}
-
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test Results
-          path: TestResults
+          path: test-results
 
       - name: Codecov
         uses: codecov/codecov-action@v5.1.1
 
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v4
-        with:
-          name: BlazorApp-test-results
-          path: TestResults
-
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.0.3
         with:
-          versionSpec: "5.x"
+          versionSpec: "6.x"
 
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
