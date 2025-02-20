@@ -1,0 +1,16 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+<Router AppAssembly="typeof(Program).Assembly">
+	<Found Context="routeData">
+		<AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+			<NotAuthorized>
+				<NotAuthorized/>
+			</NotAuthorized>
+		</AuthorizeRouteView>
+		<FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+	</Found>
+	<NotFound>
+		<LayoutView Layout="typeof(Layout.MainLayout)">
+			<h1>Sorry, there's nothing at this address.</h1>
+		</LayoutView>
+	</NotFound>
+</Router>

@@ -1,0 +1,24 @@
+<header class="container flex items-center justify-between w-full max-w-3xl px-6 py-2 mx-auto xl:max-w-5xl">
+	<a href="#" class="block h-8 text-2xl font-semibold hover:text-blue-700">Blazing Blogs</a>
+	<div class="flex items-center">
+		<div class="hidden space-x-2 font-medium sm:block">
+			<AuthorizeView>
+				<span class="p-1">Hey @context.User.Identity?.Name!</span>
+			</AuthorizeView>
+			<a href="#" class="p-1 hover:text-blue-700">Articles</a>
+			<AuthorizeView Roles="Admin">
+				<a href="/user-overview" class="p-1 hover:text-blue-700">Users</a>
+			</AuthorizeView>
+			<AuthorizeView>
+				<Authorized>
+					<a href="/article-overview" class="p-1 hover:text-blue-700">My Articles</a>
+					<a href="/logout" class="p-1 hover:text-blue-700">Logout</a>
+				</Authorized>
+				<NotAuthorized>
+					<a href="/register" class="p-1 hover:text-blue-700">Register</a>
+					<a href="/login" class="p-1 hover:text-blue-700">Login</a>
+				</NotAuthorized>
+			</AuthorizeView>
+		</div>
+	</div>
+</header>

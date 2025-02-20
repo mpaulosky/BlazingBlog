@@ -1,0 +1,81 @@
+@page "/"
+
+@inject ISender Sender
+@attribute [StreamRendering]
+
+<PageTitle>Articles</PageTitle>
+
+<div class="space-y-6">
+	<h2 class="text-3xl font-extrabold dark:text-gray-50">Articles</h2>
+
+	<AuthorizeView Roles="Admin, Writer">
+		<a href="article-editor"
+		   class="p-3 text-sm font-bold uppercase rounded bg-blue-400 text-gray-900 inline-block hover:text-blue-700">Create
+			New Article</a>
+	</AuthorizeView>
+
+	@if (_articles is null)
+	{
+
+		<p><em>Loading articles...</em></p>
+
+	}
+	else if (_articles.Count == 0)
+	{
+
+		<p><em>No articles found</em></p>
+
+	}
+	else
+	{
+		<ul class="space-y-8 xl:space-y-10">
+			@foreach (var article in _articles)
+			{
+
+				<li>
+					<article>
+						<dl>
+							<dd class="text-sm text-gray-80">
+								<time>@article.PublishedOn</time>
+								<span>by @article.UserName</span>
+							</dd>
+						</dl>
+						<div class="space-y-1">
+							<h3 class="text-2xl font-bold tracking-tight">
+								<a href="/article/@article.Id" class="text-gray-50 hover:text-blue-700">@article.Title</a>
+							</h3>
+							<p class="max-w-full text-gray-80 prose">@article.Content</p>
+
+							@if (article.CanEdit)
+							{
+									<span>
+										<a href="/article-editor/@article.Id" class="text-s text-violet-600 hover:text-blue-700">Edit
+											Article</a>
+									</span>
+							}
+
+						</div>
+					</article>
+				</li>
+
+			}
+		</ul>
+
+	}
+</div>
+
+@code {
+
+	private List<ArticleResponse>? _articles = [];
+
+	protected override async Task OnInitializedAsync()
+	{
+
+		var result = await Sender.Send(new GetArticleQuery());
+
+		if (result.Success) _articles = result;
+		else _articles = [];
+
+	}
+
+}
