@@ -4,68 +4,47 @@ name: "Build and Test .NET projects"
 on:
   push:
     branches: [ "main" ]
-
+    paths:
+      - 'src/**'
+      - 'tests/**'
   pull_request:
     branches: [ "*" ]
-  
+    paths:
+      - 'src/**'
+      - 'tests/**'
+        
   workflow_dispatch:
     inputs:
       reason:
-        description: "The reason for running the workflow"
+        description: 'Reason for manual run'
         required: true
-        default: "Manual run"
+        default: 'Manual run'
 
 jobs:
   build-and-test:
-    name: Build-and-Test=${{matrix.os}}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
+
+    runs-on: ubuntu-latest
 
     env:
-      DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-      DOTNET_NOLOGO: true
-      DOTNET_GENERATE_ASPNET_CERTIFICATE: false
-      DOTNET_ADD_GLOBAL_TOOLS_TO_PATH: false
-      DOTNET_MULTILEVEL_LOOKUP: 0
-      BUILD_CONFIG: 'Release --no-restore'
-      SOLUTION: 'BlazingBlog.sln'
-      REPORT_NAME: 'BlazingBlog-Test-Results'
-    
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+
     steps:
       - uses: actions/checkout@v4
-      - name: Fetch all history for all tags and branches
-        run: |
-          git fetch --prune --unshallow
-
-      - name: 'Print manual run reason'
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-        run: |
-          echo 'Reason: ${{ github.event.inputs.reason }}'
-
-      - name: Setup .NET Core SDK
+      - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           global-json-file: global.json
 
-      - name: Workload install
-        run: dotnet workload restore
-
-      - name: Restores
+      - name: Restore dependencies
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration $BUILD_CONFIG
+        run: dotnet build --no-restore
 
-      - name: Test
-        run: dotnet test --configuration $BUILD_CONFIG --no-build --logger trx --results-directory "test-results"
+      - name: Run Tests
+        run: dotnet test UnitTests.slnf --no-build --logger trx --results-directory "test-results"
 
-      - name: Publish Test
-        permissions:
-          checks: write
-          pull-requests: write
+      - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         if: always()
@@ -73,7 +52,7 @@ jobs:
           files: |
             test-results/**/*.xml
             test-results/**/*.trx
-            test-results/**/*.json
+            test-results/**/*.json 
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.1.1
