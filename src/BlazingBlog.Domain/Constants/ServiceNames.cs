@@ -18,6 +18,6 @@ public static class ServiceNames
 
 	public const string Migration = "database-migration";
 
-	public const string OutputCache = "outputcache";
+	public const string OutputCache = "output-cache";
 
 }
