@@ -8,9 +8,7 @@
 
 [![Built With .NET](https://img.shields.io/badge/Built_With_.NET-512BD4?style=plastic&logo=DotNet&logoColor=white)](https://dot.net)
 ![GitHub](https://img.shields.io/github/license/mpaulosky/BlazingBlog?logo=github)
-[![Build and Test .NET projects](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet.yml)
-[![Test Results](https://gist.githubusercontent.com/mpaulosky/b29eba707101d6d1148aff5fb36b1ec5/raw/a878f948faf476152ee6b1843b39c19cd12df882/test-results-badge.svg)](https://fritzblog.blob.core.windows.net/githubartifacts/unittest-badge.svg)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![Build and Test .NET projects](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/mpaulosky/BlazingBlog/actions/workflows/dotnet.yml)<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END --> 
 
