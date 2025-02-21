@@ -3,10 +3,6 @@
 codecov:
   require_ci_to_pass: false
 
-test:
-  absolute <relative> (change)
-  35% <72%> (+4%)
-
 coverage:
   precision: 2
   round: down
