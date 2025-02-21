@@ -1,6 +1,6 @@
 // =======================================================
 // Copyright (c) 2025. All rights reserved.
-// File Name :     ArticlesTests.cs
+// File Name :     ArticleTests.cs
 // Company :       mpaulosky
 // Author :        Matthew Paulosky
 // Solution Name : BlazingBlog
@@ -12,7 +12,7 @@ namespace BlazingBlog.Domain.Article;
 
 [ExcludeFromCodeCoverage]
 [TestSubject(typeof(Article))]
-public class ArticlesTests
+public class ArticleTests
 {
 
 	private static readonly DateTimeOffset TestDate = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
@@ -25,6 +25,7 @@ public class ArticlesTests
 			.RuleFor(x => x.CreatedOn, TestDate)
 			.RuleFor(x => x.IsPublished, true)
 			.RuleFor(x => x.PublishedOn, TestDate)
+			.RuleFor(x => x.ModifiedOn, TestDate)
 			.RuleFor(x => x.UserId, f => f.Random.Guid().ToString());
 
 	[Fact]
@@ -43,6 +44,7 @@ public class ArticlesTests
 			CreatedOn = testArticle.CreatedOn,
 			IsPublished = testArticle.IsPublished,
 			PublishedOn = testArticle.PublishedOn,
+			ModifiedOn = testArticle.ModifiedOn,
 			UserId = testArticle.UserId
 		};
 	
@@ -54,6 +56,7 @@ public class ArticlesTests
 		article.IsPublished.Should().Be(testArticle.IsPublished);
 		article.PublishedOn.Should().Be(testArticle.PublishedOn);
 		article.PublishedOn.Should().Be(testArticle.CreatedOn);
+		article.ModifiedOn.Should().Be(testArticle.ModifiedOn);
 		article.UserId.Should().Be(testArticle.UserId);
 
 	}
@@ -71,6 +74,7 @@ public class ArticlesTests
 				CreatedOn = TestDate,
 				IsPublished = true,
 				PublishedOn = TestDate,
+				ModifiedOn = TestDate,
 				UserId = "test-user-id"
 		};
 
@@ -83,6 +87,7 @@ public class ArticlesTests
 		article.CreatedOn.Should().Be(TestDate);
 		article.IsPublished.Should().BeTrue();
 		article.PublishedOn.Should().Be(TestDate);
+		article.ModifiedOn.Should().Be(TestDate);
 		article.UserId.Should().Be("test-user-id");
 
 	}
@@ -99,14 +104,15 @@ public class ArticlesTests
 				CreatedOn = TestDate,
 				IsPublished = true,
 				PublishedOn = null,
+				ModifiedOn = null,
 				UserId = "test-user-id"
 		};
 
 		// Act
-		article.PublishedOn = null;
 
 		// Assert
 		article.PublishedOn.Should().BeNull();
+		article.ModifiedOn.Should().BeNull();
 	}
 
 }
