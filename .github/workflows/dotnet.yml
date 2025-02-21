@@ -40,16 +40,6 @@ jobs:
       - name: Run Tests
         run: dotnet test UnitTests.slnf --no-build --logger trx --results-directory "test-results"
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
-        if: always()
-        with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
-
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -63,7 +53,7 @@ jobs:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.0.3
         with:
-          versionSpec: "6.x"
+          versionSpec: "6.1.0"
 
       - name: Use GitVersion
         id: gitversion # step id used as reference for output values
@@ -71,6 +61,44 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
 
-        # Use always() to always run this step to
-        # publish test results when there are test failures
-        if: ${{ always() }}
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
+    
+      - name: Set badge color
+        shell: bash
+        run: |
+          case ${{ fromJSON( steps.test-results.outputs.json ).conclusion }} in
+            success)
+              echo "BADGE_COLOR=31c653" >> $GITHUB_ENV
+              ;;
+            failure)
+              echo "BADGE_COLOR=800000" >> $GITHUB_ENV
+              ;;
+            neutral)
+              echo "BADGE_COLOR=696969" >> $GITHUB_ENV
+              ;;
+          esac
+    
+      - name: Create badge
+        uses: emibcn/badge-action@808173dd03e2f30c980d03ee49e181626088eee8
+        with:
+          label: Tests
+          status: '${{ fromJSON( steps.test-results.outputs.json ).formatted.stats.tests }} tests, ${{ fromJSON( steps.test-results.outputs.json ).formatted.stats.runs }} runs: ${{ fromJSON( steps.test-results.outputs.json ).conclusion }}'
+          color: ${{ env.BADGE_COLOR }}
+          path: badge.svg
+    
+      - name: Upload badge to Gist
+        # Upload only for master branch
+        if: github.ref == 'refs/heads/master'
+        uses: andymckay/append-gist-action@6e8d64427fe47cbacf4ab6b890411f1d67c07f3e
+        with:
+          token: ${{ secrets.GIST_TOKEN }}
+          gistURL: https://gist.githubusercontent.com/mpaulosky/b29eba707101d6d1148aff5fb36b1ec5/raw/a878f948faf476152ee6b1843b39c19cd12df882
+          file: test-results-badge.svg
