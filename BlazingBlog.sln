@@ -59,6 +59,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\formatting.yml = .github\workflows\formatting.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application.Tests.Unit", "tests\BlazingBlog.Application.Tests.Unit\BlazingBlog.Application.Tests.Unit.csproj", "{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,7 @@ Global
 		{714C1518-2953-42A7-864F-1E325790EB05} = {9B64144D-81AE-40A5-AC81-A4459A3D7ACD}
 		{3479BB95-4F89-431E-B6E8-A9ACBF3629B8} = {9B64144D-81AE-40A5-AC81-A4459A3D7ACD}
 		{9037B8E9-7E50-4E01-B70A-9E4D319F0504} = {714C1518-2953-42A7-864F-1E325790EB05}
+		{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956} = {052616D2-4180-42E3-8224-A2CD548FA9A1}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{828D6580-328F-46B6-90E6-8BECB8D1FE96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -108,5 +111,9 @@ Global
 		{6B992BAF-4152-44BF-BAB5-57E51A7B89DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B992BAF-4152-44BF-BAB5-57E51A7B89DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B992BAF-4152-44BF-BAB5-57E51A7B89DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
