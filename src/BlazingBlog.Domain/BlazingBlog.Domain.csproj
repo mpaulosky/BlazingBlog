@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="BlazingBlog.Domain.Tests.Unit" />
+    </ItemGroup>
+
 </Project>
