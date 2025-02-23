@@ -48,7 +48,7 @@ jobs:
           path: test-results
 
       - name: Codecov
-        uses: codecov/codecov-action@v5.1.1
+        uses: codecov/codecov-action@v5.3.1
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
