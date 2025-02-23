@@ -29,6 +29,8 @@ public class UpdateArticleCommandHandler : ICommandHandler<UpdateArticleCommand,
 
 		var updatedArticle = request.Adapt<Article>();
 
+		updatedArticle.ModifiedOn = DateTimeOffset.UtcNow;
+
 		if (!await _userService.CurrentUserCanEditArticlesAsync(updatedArticle.Id))
 		{
 
@@ -36,6 +38,7 @@ public class UpdateArticleCommandHandler : ICommandHandler<UpdateArticleCommand,
 
 		}
 
+		
 		var article = await _articleService.UpdateArticleAsync(updatedArticle);
 
 		if (article is null)
