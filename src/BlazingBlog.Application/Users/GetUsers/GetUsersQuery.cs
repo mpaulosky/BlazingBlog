@@ -9,9 +9,4 @@
 
 namespace BlazingBlog.Application.Users.GetUsers;
 
-public class GetUsersQuery : IQuery<List<UserResponse>>
-{
-
-
-
-}
+public class GetUsersQuery : IQuery<List<UserResponse>>;
