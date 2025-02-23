@@ -6,7 +6,7 @@ name: .NET Build
 on:
 
   push:
-    branches: [ "**" ]
+    branches: [ "*" ]
     paths-ignore:
       - "**/*.docs"
       - "**/*.md"
@@ -54,8 +54,31 @@ jobs:
           name: Test Results
           path: test-results
 
+
       - name: Codecov
-        uses: codecov/codecov-action@v5.1.1
+        uses: codecov/codecov-action@v5.1.2
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v3.1.11
+        with:
+          versionSpec: '6.0'
+
+      - name: Use GitVersion
+        id: gitversion # step id used as reference for output values
+        uses: gittools/actions/gitversion/execute@v3.1.11
+
+      - run: |
+          echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
+          echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
