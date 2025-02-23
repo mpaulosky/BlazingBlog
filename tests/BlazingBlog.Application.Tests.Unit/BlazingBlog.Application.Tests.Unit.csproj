@@ -9,11 +9,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Bogus" />
         <PackageReference Include="coverlet.collector" />
         <PackageReference Include="FluentAssertions" />
         <PackageReference Include="JetBrains.Annotations" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" />
         <PackageReference Include="NSubstitute" />
+        <PackageReference Include="WaffleGenerator.Bogus" />
         <PackageReference Include="xunit" />
         <PackageReference Include="xunit.runner.visualstudio"/>
     </ItemGroup>
@@ -24,6 +26,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\BlazingBlog.Application\BlazingBlog.Application.csproj" />
+      <ProjectReference Include="..\..\src\BlazingBlog.Domain\BlazingBlog.Domain.csproj" />
+      <ProjectReference Include="..\..\src\BlazingBlog.Infrastructure\BlazingBlog.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
