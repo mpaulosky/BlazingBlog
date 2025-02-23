@@ -7,20 +7,14 @@ on:
 
   push:
     branches: [ "*" ]
-    paths:
-      - 'src/**'
-      - 'tests/**'
-    paths-ignore:
-      - "**/*.docs"
-      - "**/*.md"
-      - "**/*.gitignore"
-      - "**/*.gitattributes"
 
   pull_request:
     branches: [ "main" ]
+
     paths:
       - 'src/**'
       - 'tests/**'
+
     paths-ignore:
       - "**/*.docs"
       - "**/*.md"
@@ -60,6 +54,13 @@ jobs:
           name: Test Results
           path: test-results
 
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
+        if: always()
+        with:
+          files: |
+            test-results/**/*.trx
 
       - name: Codecov
         uses: codecov/codecov-action@v5.1.2
@@ -85,13 +86,3 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
-        if: always()
-        with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
