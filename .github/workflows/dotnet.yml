@@ -4,16 +4,23 @@
 name: .NET Build
 
 on:
+
   push:
-    branches: [ "main", "*" ]
-    paths:
-      - 'src/**'
-      - 'tests/**'
+    branches: [ "**" ]
+    paths-ignore:
+      - "**/*.docs"
+      - "**/*.md"
+      - "**/*.gitignore"
+      - "**/*.gitattributes"
+
   pull_request:
     branches: [ "main" ]
-    paths:
-      - 'src/**'
-      - 'tests/**'
+    paths-ignore:
+      - "**/*.docs"
+      - "**/*.md"
+      - "**/*.gitignore"
+      - "**/*.gitattributes"
+  
   workflow_dispatch:
 
 jobs:
