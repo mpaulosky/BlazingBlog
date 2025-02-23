@@ -7,13 +7,10 @@ on:
 
   push:
     branches: [ "*" ]
-  
+
   pull_request:
     branches: [ "main" ]
-    
-    paths:
-      - 'src/**'
-      - 'tests/**'
+
     paths-ignore:
     - "**/*.docs"
     - "**/*.md"
@@ -46,7 +43,14 @@ jobs:
       - name: Run Tests
         run: dotnet test UnitTests.slnf --no-build  runsettings.xml
 
-      - name: Upload and Publish Test Results
+      - name: Codecov
+        uses: codecov/codecov-action@v5.1.2
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+
+      - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
