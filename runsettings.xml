@@ -11,7 +11,6 @@
                 <Configuration>
                     <CodeCoverage>
                         <Format>opencover</Format>
-                        <Format>trx</Format>
 
                         <ModulePaths>**/*.json</ModulePaths>
                         <!-- We recommend you do not change the following values: -->
