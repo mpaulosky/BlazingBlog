@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionF
 		nuget.config = nuget.config
 		REFERENCES.md = REFERENCES.md
 		UnitTests.slnf = UnitTests.slnf
+		runsettings.xml = runsettings.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{052616D2-4180-42E3-8224-A2CD548FA9A1}"
