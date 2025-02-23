@@ -2,7 +2,7 @@
 
 <RunSettings>
   <RunConfiguration>
-    <ResultsDirectory>./TestResults</ResultsDirectory>
+    <ResultsDirectory>./test-results</ResultsDirectory>
     <TestSessionTimeout>350000</TestSessionTimeout>
   </RunConfiguration>
   <DataCollectionRunSettings>
