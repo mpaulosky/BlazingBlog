@@ -9,7 +9,7 @@
 
 namespace BlazingBlog.Application.Articles.GetArticlesByCurrentUser;
 
-public class GetArticlesByCurrentUserQueryHandler : IQueryHandler<GetArticlesByCurrentUserQuery, List<ArticleResponse>>
+public class GetArticlesByCurrentUserQueryHandler : IQueryHandler<GetArticlesByCurrentUserQuery, List<ArticleResponse>?>
 {
 
 	private readonly IArticleService _articleService;
@@ -24,13 +24,15 @@ public class GetArticlesByCurrentUserQueryHandler : IQueryHandler<GetArticlesByC
 
 	}
 
-	public async Task<Result<List<ArticleResponse>>> Handle(GetArticlesByCurrentUserQuery request, CancellationToken cancellationToken)
+	public async Task<Result<List<ArticleResponse>?>> Handle(GetArticlesByCurrentUserQuery request, CancellationToken cancellationToken)
 	{
 
 		var userId = await _userService.GetCurrentUserIdAsync();
 
 		var articles = await _articleService.GetArticlesByUserAsync(userId);
-
+		
+		if (articles is null) return Result.Fail<List<ArticleResponse>?>("No articles were found.");
+		
 		var response = articles.Adapt<List<ArticleResponse>>();
 
 		return response.OrderByDescending(a => a.PublishedOn).ToList();
