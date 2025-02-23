@@ -64,6 +64,9 @@ jobs:
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
+        with:
+          files: |
+            test-results/**/*.trx
 
       - name: Checkout
         uses: actions/checkout@v4
