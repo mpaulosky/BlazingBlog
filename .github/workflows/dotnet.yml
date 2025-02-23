@@ -43,6 +43,13 @@ jobs:
       - name: Run Tests
         run: dotnet test UnitTests.slnf --no-build --logger trx --results-directory "test-results"
 
+      - name: Codecov
+        uses: codecov/codecov-action@v5.1.2
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -54,16 +61,6 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2
         id: test-results
         if: always()
-        with:
-          files: |
-            test-results/**/*.trx
-
-      - name: Codecov
-        uses: codecov/codecov-action@v5.1.2
-
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
         with:
           files: |
             test-results/**/*.trx
