@@ -2,7 +2,8 @@
   "solution": {
     "path": "BlazingBlog.sln",
     "projects": [
-      "tests\\BlazingBlog.Domain.Tests.Unit\\BlazingBlog.Domain.Tests.Unit.csproj"
+      "tests\\BlazingBlog.Domain.Tests.Unit\\BlazingBlog.Domain.Tests.Unit.csproj",
+      "tests\\BlazingBlog.Application.Tests.Unit\\BlazingBlog.Application.Tests.Unit.csproj"
     ]
   }
 }
