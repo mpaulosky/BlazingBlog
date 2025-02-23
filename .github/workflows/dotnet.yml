@@ -7,25 +7,18 @@ on:
 
   push:
     branches: [ "*" ]
-    paths:
-      - 'src/**'
-      - 'tests/**'
-    paths-ignore:
-      - "**/*.docs"
-      - "**/*.md"
-      - "**/*.gitignore"
-      - "**/*.gitattributes"
-
+  
   pull_request:
     branches: [ "main" ]
+    
     paths:
       - 'src/**'
       - 'tests/**'
     paths-ignore:
-      - "**/*.docs"
-      - "**/*.md"
-      - "**/*.gitignore"
-      - "**/*.gitattributes"
+    - "**/*.docs"
+    - "**/*.md"
+    - "**/*.gitignore"
+    - "**/*.gitattributes"
   
   workflow_dispatch:
 
@@ -51,15 +44,24 @@ jobs:
         run: dotnet build --no-restore
 
       - name: Run Tests
-        run: dotnet test UnitTests.slnf --no-build --logger trx --results-directory "test-results"
+        run: dotnet test UnitTests.slnf --no-build  runsettings.xml
 
-      - name: Upload Test Results
+      - name: Upload and Publish Test Results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: Test Results
           path: test-results
 
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        id: test-results
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
+            test-results/**/*.trx
+            test-results/**/*.json
 
       - name: Codecov
         uses: codecov/codecov-action@v5.1.2
@@ -68,10 +70,6 @@ jobs:
         if: ${{ !cancelled() }}
         uses: codecov/test-results-action@v1
 
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v3.1.11
@@ -85,13 +83,3 @@ jobs:
       - run: |
           echo "FullSemVer: ${{ steps.gitversion.outputs.fullSemVer }}"
           echo "MajorMinorPatch: ${{ steps.gitversion.outputs.majorMinorPatch }}"
-
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
-        id: test-results
-        if: always()
-        with:
-          files: |
-            test-results/**/*.xml
-            test-results/**/*.trx
-            test-results/**/*.json
