@@ -63,7 +63,7 @@ jobs:
         if: always()
         with:
           files: |
-            test-results/**/*.trx
+            test-results/**/*.xml
 
       - name: Checkout
         uses: actions/checkout@v4
