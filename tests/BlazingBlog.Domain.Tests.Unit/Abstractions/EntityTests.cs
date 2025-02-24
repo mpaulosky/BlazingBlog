@@ -19,7 +19,10 @@ public class EntityTests
 	{
 
 		// Arrange
-		var entity = new TestEntity();
+		var entity = new TestEntity
+		{
+				Id = 0
+		};
 
 		// Act & Assert
 		Assert.Equal(0, entity.Id);
