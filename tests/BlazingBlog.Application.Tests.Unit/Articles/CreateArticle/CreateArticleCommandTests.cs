@@ -34,7 +34,7 @@ public class CreateArticleCommandTests
 				Id: 1,
 				Title: command.Title,
 				Content: command.Content,
-				CreatedOn: DateTimeOffset.UtcNow,
+				CreatedOn: TestDate,
 				PublishedOn: command.PublishedOn,
 				ModifiedOn: null,
 				IsPublished: command.IsPublished,

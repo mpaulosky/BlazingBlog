@@ -13,22 +13,22 @@ namespace BlazingBlog.Application.Articles.GetArticleById;
 [TestSubject(typeof(GetArticleByIdQueryHandler))]
 public class GetArticleByIdQueryHandlerTests
 {
-	
-	private readonly IArticleService _articleService;
 
 	private readonly IUserRepository _userRepository;
 
-	private readonly IUserService _userService;
+	private readonly IArticleService _articleService;
 
 	private readonly GetArticleByIdQueryHandler _handler;
+
 
 	public GetArticleByIdQueryHandlerTests()
 	{
 
-		_articleService = Substitute.For<IArticleService>();
 		_userRepository = Substitute.For<IUserRepository>();
-		_userService = Substitute.For<IUserService>();
-		_handler = new GetArticleByIdQueryHandler(_articleService, _userRepository, _userService);
+
+		_articleService = Substitute.For<IArticleService>();
+
+		_handler = new GetArticleByIdQueryHandler(_articleService, _userRepository);
 
 	}
 
@@ -37,37 +37,70 @@ public class GetArticleByIdQueryHandlerTests
 	{
 
 		// Arrange
-		var user = Helpers.Helpers.UserGenerator.Generate();
-		var article = Helpers.Helpers.ArticleGenerator.Generate();
-		article.UserId = user.Id;
+		var article = ArticleGenerator.Generate();
+		var user = UserGenerator.Generate();
+		user.Id = article.UserId;
+
+		var query = new GetArticleByIdQuery { Id = article.Id };
+
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = user.UserName ?? string.Empty;
+		articleResponse.CanEdit = false;
+
+		_userRepository.GetUserByIdAsync(article.UserId).Returns(user);
+		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
+
+		// Act
+		ArticleResponse? result = (await _handler.Handle(query, CancellationToken.None)).Value;
+
+		// Assert
+		result.Should().NotBeNull();
+		result!.Value.Id.Should().Be(articleResponse.Id);
+		result.Value.Title.Should().Be(articleResponse.Title);
+		result.Value.Content.Should().Be(articleResponse.Content);
+		result.Value.CreatedOn.Should().Be(articleResponse.CreatedOn);
+		result.Value.PublishedOn.Should().Be(articleResponse.PublishedOn);
+		result.Value.IsPublished.Should().Be(articleResponse.IsPublished);
+		result.Value.ModifiedOn.Should().Be(articleResponse.ModifiedOn);
+		result.Value.UserName.Should().Be(articleResponse.UserName);
+		result.Value.UserId.Should().Be(articleResponse.UserId);
+		result.Value.CanEdit.Should().Be(articleResponse.CanEdit);
+		result.Value.ModifiedOn.Should().NotBeNull();
+		result.Value.UserName.Should().Be(articleResponse.UserName);
+
+	}
+
+	[Fact]
+	public async Task Handle_ShouldReturnArticleResponseWithUnknownUser_WhenArticleHasNoUserId()
+	{
+
+		// Arrange
+		var article = ArticleGenerator.Generate();
+		article.UserId = string.Empty;
+		
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = "Unknown";
+		articleResponse.CanEdit = false;
 		
 		var query = new GetArticleByIdQuery { Id = article.Id };
 		
-		var articleResponse = article.Adapt<ArticleResponse>();
-		
 		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
-		_userRepository.GetUserByIdAsync(article.UserId).Returns(user);
-		_userService.CurrentUserCanEditArticlesAsync(article.Id).Returns(true);
 
 		// Act
 		var result = await _handler.Handle(query, CancellationToken.None);
 
 		// Assert
 		result.Should().NotBeNull();
-		result.Value.Should().BeEquivalentTo(articleResponse, options => options
-						.Excluding(r => r.CanEdit)
-						.Excluding(r => r.UserName));
+		result.Value.Should().BeEquivalentTo(articleResponse);
 
 	}
 
 	[Fact]
-	public async Task Handle_ShouldReturnNull_WhenArticleDoesNotExist()
+	public async Task Handle_ShouldReturnFailure_WhenArticleDoesNotExist()
 	{
 
 		// Arrange
-		var article = Helpers.Helpers.ArticleGenerator.Generate();
-		
-		var query = new GetArticleByIdQuery { Id = article.Id };
+		var query = new GetArticleByIdQuery { Id = 1 };
 
 		// Act
 		var result = await _handler.Handle(query, CancellationToken.None);
@@ -76,29 +109,6 @@ public class GetArticleByIdQueryHandlerTests
 		result.Success.Should().BeFalse();
 		result.Failure.Should().BeTrue();
 		result.Error.Should().Be("The article does not exist.");
-
-	}
-
-	[Fact]
-	public async Task Handle_ShouldReturnArticleResponseWithUnknownUser_WhenUserDoesNotExist()
-	{
-
-		// Arrange
-		var article = Helpers.Helpers.ArticleGenerator.Generate();
-		var articleResponse = article.Adapt<ArticleResponse>();
-		articleResponse.UserName = "Unknown";
-		articleResponse.CanEdit = false;
-		var query = new GetArticleByIdQuery { Id = article.Id };
-		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
-
-		_userRepository.GetUserByIdAsync(Arg.Any<string>()).Returns((User)null!);
-
-		// Act
-		var result = await _handler.Handle(query, CancellationToken.None);
-
-		// Assert
-		result.Should().NotBeNull();
-		result.Value.Should().BeEquivalentTo(articleResponse);
 
 	}
 

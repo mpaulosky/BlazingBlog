@@ -36,7 +36,7 @@ public class GetArticlesByCurrentUserQueryHandlerTests
 		// Arrange
 		var userId = Guid.NewGuid().ToString();
 
-		var articles = Helpers.Helpers.ArticleGenerator.Generate(2);
+		var articles = ArticleGenerator.Generate(2);
 		articles[0].UserId = userId;
 		articles[1].UserId = userId;
 		articles[0].PublishedOn = DateTime.UtcNow.AddDays(-1);

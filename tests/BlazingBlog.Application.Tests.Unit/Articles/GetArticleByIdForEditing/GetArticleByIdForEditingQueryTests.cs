@@ -19,10 +19,7 @@ public class GetArticleByIdForEditingQueryTests
 	{
 
 		// Arrange
-		var query = new GetArticleByIdForEditingQuery();
-
-		// Act
-		query.Id = 5;
+		var query = new GetArticleByIdForEditingQuery{ Id = 5 };
 
 		// Assert
 		query.Id.Should().Be(5);

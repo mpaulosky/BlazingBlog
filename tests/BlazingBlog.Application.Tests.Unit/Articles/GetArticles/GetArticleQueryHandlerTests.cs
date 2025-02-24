@@ -37,8 +37,8 @@ public class GetArticleQueryHandlerTests
 	{
 
 		// Arrange
-		var articles = Helpers.Helpers.ArticleGenerator.Generate(2);
-		var users = Helpers.Helpers.UserGenerator.Generate(2);
+		var articles = ArticleGenerator.Generate(2);
+		var users = UserGenerator.Generate(2);
 		users[0].Id = articles[0].UserId!;
 		users[1].Id = articles[1].UserId!;
 

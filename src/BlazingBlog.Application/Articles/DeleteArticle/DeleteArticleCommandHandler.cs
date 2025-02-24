@@ -37,9 +37,7 @@ public class DeleteArticleCommandHandler : ICommandHandler<DeleteArticleCommand>
 
 		var deleted = await _articleService.DeleteArticleAsync(request.Id);
 
-		if (deleted) return Result.Ok();
-
-			return Result.Fail("The article does not exist");
+		return deleted ? Result.Ok() : Result.Fail("The article does not exist");
 
 	}
 

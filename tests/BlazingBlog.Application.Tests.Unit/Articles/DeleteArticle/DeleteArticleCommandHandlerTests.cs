@@ -14,20 +14,35 @@ namespace BlazingBlog.Application.Articles.DeleteArticle;
 public class DeleteArticleCommandHandlerTests
 {
 
+	private readonly IArticleService _articleService;
+
+	private readonly IUserService _userService;
+
+	private readonly DeleteArticleCommandHandler _handler;
+
+
+	public DeleteArticleCommandHandlerTests()
+	{
+
+		_articleService = Substitute.For<IArticleService>();
+		
+		_userService = Substitute.For<IUserService>();
+
+		_handler = new DeleteArticleCommandHandler(_articleService, _userService);
+
+	}
+
 	[Fact]
 	public async Task Handle_ShouldReturnFailResult_WhenUserNotAuthorized()
 	{
 
 		// Arrange
-		var articleService = Substitute.For<IArticleService>();
-		var userService = Substitute.For<IUserService>();
-		userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(false);
+		_userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(false);
 
-		var handler = new DeleteArticleCommandHandler(articleService, userService);
 		var command = new DeleteArticleCommand { Id = 1 };
 
 		// Act
-		var result = await handler.Handle(command, CancellationToken.None);
+		var result = await _handler.Handle(command, CancellationToken.None);
 
 		// Assert
 		result.Success.Should().BeFalse();
@@ -40,16 +55,13 @@ public class DeleteArticleCommandHandlerTests
 	{
 
 		// Arrange
-		var articleService = Substitute.For<IArticleService>();
-		var userService = Substitute.For<IUserService>();
-		userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(true);
-		articleService.DeleteArticleAsync(Arg.Any<int>()).Returns(true);
+		_userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(true);
+		_articleService.DeleteArticleAsync(Arg.Any<int>()).Returns(true);
 
-		var handler = new DeleteArticleCommandHandler(articleService, userService);
 		var command = new DeleteArticleCommand { Id = 1 };
 
 		// Act
-		var result = await handler.Handle(command, CancellationToken.None);
+		var result = await _handler.Handle(command, CancellationToken.None);
 
 		// Assert
 		result.Success.Should().BeTrue();
@@ -61,16 +73,13 @@ public class DeleteArticleCommandHandlerTests
 	{
 
 		// Arrange
-		var articleService = Substitute.For<IArticleService>();
-		var userService = Substitute.For<IUserService>();
-		userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(true);
-		articleService.DeleteArticleAsync(Arg.Any<int>()).Returns(false);
+		_userService.CurrentUserCanEditArticlesAsync(Arg.Any<int>()).Returns(true);
+		_articleService.DeleteArticleAsync(Arg.Any<int>()).Returns(false);
 
-		var handler = new DeleteArticleCommandHandler(articleService, userService);
 		var command = new DeleteArticleCommand { Id = 1 };
 
 		// Act
-		var result = await handler.Handle(command, CancellationToken.None);
+		var result = await _handler.Handle(command, CancellationToken.None);
 
 		// Assert
 		result.Success.Should().BeFalse();

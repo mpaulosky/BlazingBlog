@@ -95,10 +95,10 @@ public class ArticleTests
 
 		// Arrange
 		var article =_articleGenerator.Generate();
-		article.UserId = null;
+		article.UserId = string.Empty;
 
 		// Act & Assert
-		article.UserId.Should().BeNull();
+		article.UserId.Should().BeEmpty();
 
 	}
 
