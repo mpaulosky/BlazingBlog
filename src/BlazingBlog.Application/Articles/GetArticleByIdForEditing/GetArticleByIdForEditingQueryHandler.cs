@@ -14,14 +14,18 @@ public class GetArticleByIdForEditingQueryHandler : IQueryHandler<GetArticleById
 
 	private readonly IArticleService _articleService;
 
+	private readonly IUserRepository _userRepository;
+
 	private readonly IUserService _userService;
 
 	public GetArticleByIdForEditingQueryHandler(
-			IArticleService articleService,
+			IArticleService articleService, 
+			IUserRepository userRepository, 
 			IUserService userService)
 	{
 
 		_articleService = articleService;
+		_userRepository = userRepository;
 		_userService = userService;
 
 	}
@@ -29,15 +33,22 @@ public class GetArticleByIdForEditingQueryHandler : IQueryHandler<GetArticleById
 	public async Task<Result<ArticleResponse?>> Handle(GetArticleByIdForEditingQuery request, CancellationToken cancellationToken)
 	{
 
-		var canEdit = await _userService.CurrentUserCanEditArticlesAsync(request.Id);
-
-		//if (!canEdit) return Result.Fail<ArticleResponse?>("You're not allowed to edit this article.");
-
 		var article = await _articleService.GetArticleByIdAsync(request.Id);
+
+		if (article is null) return Result.Fail<ArticleResponse?>("The article does not exist.");
 
 		var articleResponse = article.Adapt<ArticleResponse>();
 
-		articleResponse.CanEdit = canEdit;
+		if (article.UserId == string.Empty) articleResponse.UserName = "Unknown";
+		else
+		{
+
+			var author = await _userRepository.GetUserByIdAsync(article.UserId);
+			articleResponse.UserName = author?.UserName ?? "Unknown";
+			articleResponse.UserId = article.UserId;
+			articleResponse.CanEdit = await _userService.CurrentUserCanEditArticlesAsync(article.Id);
+
+		}
 
 		return articleResponse;
 
