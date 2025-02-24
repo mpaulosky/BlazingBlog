@@ -15,6 +15,8 @@ public class GetArticleByIdForEditingQueryHandlerTests
 {
 
 	private readonly IArticleService _articleService;
+	
+	private readonly IUserRepository _userRepository;
 
 	private readonly IUserService _userService;
 
@@ -24,8 +26,9 @@ public class GetArticleByIdForEditingQueryHandlerTests
 	{
 
 		_articleService = Substitute.For<IArticleService>();
+		_userRepository = Substitute.For<IUserRepository>();
 		_userService = Substitute.For<IUserService>();
-		_handler = new GetArticleByIdForEditingQueryHandler(_articleService, _userService);
+		_handler = new GetArticleByIdForEditingQueryHandler(_articleService, _userRepository, _userService);
 
 	}
 
@@ -34,19 +37,37 @@ public class GetArticleByIdForEditingQueryHandlerTests
 	{
 
 		// Arrange
-		var query = new GetArticleByIdForEditingQuery { Id = 1 };
-		var article = new Article { Id = 1, Title = "Test Article" };
-		//var articleResponse = article.Adapt<ArticleResponse>() with { CanEdit = canEdit };
+		var article = ArticleGenerator.Generate();
+		var user = UserGenerator.Generate();
+		user.Id = article.UserId;
+
+		var query = new GetArticleByIdForEditingQuery { Id = article.Id };
+		
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = user.UserName ?? string.Empty;
+		articleResponse.CanEdit = true;
+		
 		_userService.CurrentUserCanEditArticlesAsync(query.Id).Returns(true);
+		_userRepository.GetUserByIdAsync(article.UserId).Returns(user);
 		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
 
 		// Act
-		var result = await _handler.Handle(query, CancellationToken.None);
+		var result = (await _handler.Handle(query, CancellationToken.None)).Value;
 
 		// Assert
 		result.Should().NotBeNull();
-		// result.Value.Should().BeEquivalentTo(articleResponse, options => options.Excluding(r => r.CanEdit));
-		// result.Value.CanEdit.Should().BeTrue();
+		result!.Value.Id.Should().Be(articleResponse.Id);
+		result.Value.Title.Should().Be(articleResponse.Title);
+		result.Value.Content.Should().Be(articleResponse.Content);
+		result.Value.CreatedOn.Should().Be(articleResponse.CreatedOn);
+		result.Value.PublishedOn.Should().Be(articleResponse.PublishedOn);
+		result.Value.IsPublished.Should().Be(articleResponse.IsPublished);
+		result.Value.ModifiedOn.Should().Be(articleResponse.ModifiedOn);
+		result.Value.UserName.Should().Be(articleResponse.UserName);
+		result.Value.UserId.Should().Be(articleResponse.UserId);
+		result.Value.CanEdit.Should().Be(articleResponse.CanEdit);
+		result.Value.ModifiedOn.Should().NotBeNull();
+		result.Value.UserName.Should().Be(articleResponse.UserName);
 
 	}
 
@@ -55,19 +76,26 @@ public class GetArticleByIdForEditingQueryHandlerTests
 	{
 
 		// Arrange
-		var query = new GetArticleByIdForEditingQuery { Id = 1 };
-		var article = new Article { Id = 1, Title = "Test Article" };
+		var article = ArticleGenerator.Generate();
+		var user = UserGenerator.Generate();
+		user.Id = article.UserId;
+
+		var query = new GetArticleByIdForEditingQuery { Id = article.Id };
+
 		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = user.UserName ?? string.Empty;
+		articleResponse.CanEdit = false;
+
 		_userService.CurrentUserCanEditArticlesAsync(query.Id).Returns(false);
+		_userRepository.GetUserByIdAsync(article.UserId).Returns(user);
 		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
 
 		// Act
-		var result = await _handler.Handle(query, CancellationToken.None);
+		var result = (await _handler.Handle(query, CancellationToken.None)).Value;
 
 		// Assert
 		result.Should().NotBeNull();
-		result.Value.Should().BeEquivalentTo(articleResponse, options => options.Excluding(r => r.CanEdit));
-		//result.Value.CanEdit.Should().BeFalse();
+		result!.Value.Should().BeEquivalentTo(articleResponse);
 
 	}
 
