@@ -38,7 +38,7 @@ public class CreateArticleCommandHandlerTests
 		{
 				Title = "Sample Title",
 				Content = "Sample Content",
-				PublishedOn = DateTimeOffset.Now,
+				PublishedOn = TestDate,
 				IsPublished = true
 		};
 
@@ -79,7 +79,7 @@ public class CreateArticleCommandHandlerTests
 		{
 				Title = "Sample Title",
 				Content = "Sample Content",
-				PublishedOn = DateTimeOffset.Now,
+				PublishedOn = TestDate,
 				IsPublished = true
 		};
 
@@ -104,7 +104,7 @@ public class CreateArticleCommandHandlerTests
 		{
 				Title = "Sample Title",
 				Content = "Sample Content",
-				PublishedOn = DateTimeOffset.Now,
+				PublishedOn = TestDate,
 				IsPublished = true
 		};
 
