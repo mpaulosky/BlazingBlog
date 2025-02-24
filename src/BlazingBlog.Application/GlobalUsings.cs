@@ -13,6 +13,7 @@ global using System.Threading;
 global using System.Threading.Tasks;
 
 global using BlazingBlog.Application.Abstractions.RequestHandling;
+global using BlazingBlog.Application.Articles;
 global using BlazingBlog.Application.Articles.GetArticlesByCurrentUser;
 global using BlazingBlog.Application.Articles.TogglePublishArticle;
 global using BlazingBlog.Application.Authentication;
