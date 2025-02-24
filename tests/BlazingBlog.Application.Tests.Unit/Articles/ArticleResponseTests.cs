@@ -14,8 +14,6 @@ namespace BlazingBlog.Application.Articles;
 public class ArticleResponseTests
 {
 
-	private static readonly DateTimeOffset TestDate = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
-
 	[Fact]
 	public void ArticleResponse_ShouldHaveCorrectValues()
 	{
@@ -27,7 +25,7 @@ public class ArticleResponseTests
 		DateTimeOffset createdOn = TestDate;
 		DateTimeOffset? publishedOn =  TestDate;
 		const bool isPublished = true;
-		DateTimeOffset? modifiedOn = null;
+		DateTimeOffset? modifiedOn = TestDate;
 		const string userName = "Tester";
 		const string userId = "user123";
 		const bool canEdit = true;
@@ -40,8 +38,10 @@ public class ArticleResponseTests
 		articleResponse.Id.Should().Be(id);
 		articleResponse.Title.Should().Be(title);
 		articleResponse.Content.Should().Be(content);
+		articleResponse.CreatedOn.Should().Be(createdOn);
 		articleResponse.PublishedOn.Should().Be(publishedOn);
 		articleResponse.IsPublished.Should().Be(isPublished);
+		articleResponse.ModifiedOn.Should().Be(modifiedOn);
 		articleResponse.UserName.Should().Be(userName);
 		articleResponse.UserId.Should().Be(userId);
 		articleResponse.CanEdit.Should().Be(canEdit);
