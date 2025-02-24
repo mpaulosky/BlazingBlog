@@ -16,9 +16,7 @@ public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand,
 
 	private readonly IUserService _userService;
 
-	public CreateArticleCommandHandler(
-			IArticleService articleService,
-			IUserService userService)
+	public CreateArticleCommandHandler(IArticleService articleService, IUserService userService)
 	{
 
 		_articleService = articleService;
@@ -39,10 +37,9 @@ public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand,
 			if (!await _userService.CurrentUserCanCreateArticlesAsync())
 			{
 
-				return FailingResult();
+				return Result.Fail<ArticleResponse>("You're not allowed to create articles, Sorry!");
 
 			}
-
 
 			var article = await _articleService.CreateAsync(newArticle);
 
@@ -52,16 +49,9 @@ public class CreateArticleCommandHandler : ICommandHandler<CreateArticleCommand,
 		catch (UserNotAuthorizedException)
 		{
 
-			return FailingResult();
+			return Result.Fail<ArticleResponse>("You're not allowed to create articles, Sorry!");
 
 		}
-
-	}
-
-	private Result<ArticleResponse> FailingResult()
-	{
-
-		return Result.Fail<ArticleResponse>("You're not allowed to create articles, Sorry!");
 
 	}
 
