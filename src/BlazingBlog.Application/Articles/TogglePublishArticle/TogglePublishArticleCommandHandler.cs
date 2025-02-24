@@ -51,7 +51,7 @@ public class TogglePublishArticleCommandHandler : ICommandHandler<TogglePublishA
 		if (article is null)
 		{
 
-			return Result.Fail<ArticleResponse?>("The article does not exist.");
+			return Result.Fail<ArticleResponse?>("Failed to update the article.");
 
 		}
 
