@@ -51,7 +51,7 @@ public class GetArticleByIdForEditingQueryHandler : IQueryHandler<GetArticleById
 		else
 		{
 
-			articleResponse.UserName = author?.UserName ?? "Unknown";
+			articleResponse.UserName = author?.UserName!;
 			articleResponse.UserId = article.UserId;
 			articleResponse.CanEdit = await _userService.CurrentUserCanEditArticlesAsync(article.Id);
 
