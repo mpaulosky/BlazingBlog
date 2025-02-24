@@ -30,9 +30,9 @@ public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand>
 				request.Password
 				);
 
-		if (result.Succeeded) return Result.Ok();
+		if (!result.Succeeded) return Result.Fail($"{string.Join(", ", result.Errors)}");
 
-		return Result.Fail($"{string.Join(", ", result.Errors)}");
+		return Result.Ok();
 
 	}
 
