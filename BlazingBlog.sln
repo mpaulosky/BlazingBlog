@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.github\workflows\formatting.yml = .github\workflows\formatting.yml
 		.github\workflows\todos-to-issues.yml = .github\workflows\todos-to-issues.yml
+		.github\workflows\code-metrics.yml = .github\workflows\code-metrics.yml
+		.github\workflows\codeql-analysis.yml = .github\workflows\codeql-analysis.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingBlog.Application.Tests.Unit", "tests\BlazingBlog.Application.Tests.Unit\BlazingBlog.Application.Tests.Unit.csproj", "{8DFF3D21-2DEB-4DFB-8FB1-93A0DC29E956}"

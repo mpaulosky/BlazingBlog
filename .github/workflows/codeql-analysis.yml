@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'csharp', 'html', 'razor' ]
+        language: [ 'csharp' ]
 
     steps:
       - name: Checkout repository
