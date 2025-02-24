@@ -12,7 +12,7 @@ namespace BlazingBlog.Domain.Abstractions;
 public abstract class Entity
 {
 
-	public int Id { get; set; }
+	public required int Id { get; set; }
 
 	public DateTimeOffset CreatedOn { get; set; } = DateTime.Now;
 
