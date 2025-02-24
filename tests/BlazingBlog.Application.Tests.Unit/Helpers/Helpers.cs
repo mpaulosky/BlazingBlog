@@ -9,12 +9,13 @@
 
 namespace BlazingBlog.Application.Helpers;
 
+[ExcludeFromCodeCoverage]
 public static class Helpers
 {
 
-	public static DateTimeOffset TestDate = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
+	internal static DateTimeOffset TestDate = new DateTimeOffset(2025, 1, 1, 0, 0, 0, TimeSpan.Zero);
 
-	public static Faker<Article> ArticleGenerator =
+	public static readonly Faker<Article> ArticleGenerator =
 			new Faker<Article>()
 					.UseSeed(421)
 					.RuleFor(x => x.Id, f => f.Random.Int(1, 100))
@@ -27,11 +28,10 @@ public static class Helpers
 					.RuleFor(x => x.ModifiedOn, TestDate)
 					.RuleFor(x => x.UserId, f => f.Random.Guid().ToString());
 
-	public static Faker<User> UserGenerator = new Faker<User>()
+	public static readonly Faker<User> UserGenerator = new Faker<User>()
 			.UseSeed(421)
 			.RuleFor(x => x.Id, f => f.Random.Guid().ToString())
 			.RuleFor(x => x.UserName, f => f.Internet.UserName())
 			.RuleFor(x => x.Email, f => f.Internet.Email());
-
 
 }
