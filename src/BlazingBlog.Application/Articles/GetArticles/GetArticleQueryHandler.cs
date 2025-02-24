@@ -51,7 +51,7 @@ public class GetArticleQueryHandler : IQueryHandler<GetArticleQuery, List<Articl
 			else
 			{
 				
-				articleResponse.UserName = author?.UserName ?? "Unknown";
+				articleResponse.UserName = author?.UserName!;
 
 				articleResponse.UserId = article.UserId;
 
