@@ -38,7 +38,6 @@ public class UpdateArticleCommandHandler : ICommandHandler<UpdateArticleCommand,
 
 		}
 
-		
 		var article = await _articleService.UpdateArticleAsync(updatedArticle);
 
 		if (article is null)
