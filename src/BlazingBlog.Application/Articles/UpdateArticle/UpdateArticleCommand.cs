@@ -18,8 +18,10 @@ public class UpdateArticleCommand : ICommand<ArticleResponse?>
 
 	public string? Content { get; set; }
 
-	public DateTimeOffset? PublishedOn { get; set; } = DateTime.Now;
+	public bool IsPublished { get; set; }
 
-	public bool IsPublished { get; set; } = false;
+	public DateTimeOffset? PublishedOn { get; set; }
+
+	public DateTimeOffset? ModifiedOn { get; set; }
 
 }
