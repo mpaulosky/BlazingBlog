@@ -7,7 +7,7 @@
 // Project Name :  BlazingBlog.Application.Tests.Unit
 // =======================================================
 
-namespace BlazingBlog.Application.TogglePublishArticle;
+namespace BlazingBlog.Application.Articles.TogglePublishArticle;
 
 [ExcludeFromCodeCoverage]
 [TestSubject(typeof(TogglePublishArticleCommandHandler))]
@@ -42,7 +42,7 @@ public class TogglePublishArticleCommandHandlerTests
 
 		// Assert
 		result.Success.Should().BeFalse();
-		result.Error.Should().Be("You are not allowed to edit this article.");
+		result.Error.Should().Be("You are not authorized to edit this article. How did you get here?");
 
 	}
 
@@ -110,6 +110,5 @@ public class TogglePublishArticleCommandHandlerTests
 		result.Error.Should().Be("Failed to update the article.");
 
 	}
-
 
 }

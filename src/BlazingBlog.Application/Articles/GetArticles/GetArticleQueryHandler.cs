@@ -39,24 +39,25 @@ public class GetArticleQueryHandler : IQueryHandler<GetArticleQuery, List<Articl
 
 			var articleResponse = article.Adapt<ArticleResponse>();
 
-			if (article.UserId is not null)
-			{
-
 				var author = await _userRepository.GetUserByIdAsync(article.UserId);
 
+			if (article.UserId == string.Empty || author is null)
+			{
+
+				articleResponse.UserName = "Unknown";
+				articleResponse.CanEdit = false;
+
+			}
+			else
+			{
+				
 				articleResponse.UserName = author?.UserName ?? "Unknown";
 
 				articleResponse.UserId = article.UserId;
 
 				articleResponse.CanEdit = await _userService
 						.CurrentUserCanEditArticlesAsync(article.Id);
-
-			}
-			else
-			{
-
-				articleResponse.UserName = "Unknown";
-
+				
 			}
 
 			response.Add(articleResponse);

@@ -7,7 +7,7 @@
 // Project Name :  BlazingBlog.Application.Tests.Unit
 // =======================================================
 
-namespace BlazingBlog.Application.TogglePublishArticle;
+namespace BlazingBlog.Application.Articles.TogglePublishArticle;
 
 [ExcludeFromCodeCoverage]
 [TestSubject(typeof(TogglePublishArticleCommand))]

@@ -33,7 +33,7 @@ public class GetArticleByIdForEditingQueryHandlerTests
 	}
 
 	[Fact]
-	public async Task Handle_ShouldReturnArticleResponse_WhenUserCanEdit()
+	public async Task Handle_ShouldReturnArticleResponse_WhenArticleExists()
 	{
 
 		// Arrange
@@ -72,6 +72,55 @@ public class GetArticleByIdForEditingQueryHandlerTests
 	}
 
 	[Fact]
+	public async Task Handle_ShouldReturnArticleResponseWithUnknownUser_WhenArticleHasNoUserId()
+	{
+
+		// Arrange
+		var article = ArticleGenerator.Generate();
+		article.UserId = string.Empty;
+
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = "Unknown";
+		articleResponse.CanEdit = false;
+
+		var query = new GetArticleByIdForEditingQuery { Id = article.Id };
+
+		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
+
+		// Act
+		var result = await _handler.Handle(query, CancellationToken.None);
+
+		// Assert
+		result.Should().NotBeNull();
+		result.Value.Should().BeEquivalentTo(articleResponse);
+
+	}
+
+	[Fact]
+	public async Task Handle_ShouldReturnArticleResponseWithUnknownUser_WhenUserServiceReturnsNull()
+	{
+
+		// Arrange
+		var article = ArticleGenerator.Generate();
+		var query = new GetArticleByIdForEditingQuery { Id = article.Id };
+
+		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
+		_userRepository.GetUserByIdAsync(article.UserId).Returns((User?)null);
+
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = "Unknown";
+		articleResponse.CanEdit = false;
+
+		// Act
+		var result = await _handler.Handle(query, CancellationToken.None);
+
+		// Assert
+		result.Should().NotBeNull();
+		result.Value.Should().BeEquivalentTo(articleResponse);
+
+	}
+
+	[Fact]
 	public async Task Handle_ShouldReturnArticleResponse_WhenUserCannotEdit()
 	{
 
@@ -96,6 +145,23 @@ public class GetArticleByIdForEditingQueryHandlerTests
 		// Assert
 		result.Should().NotBeNull();
 		result!.Value.Should().BeEquivalentTo(articleResponse);
+
+	}
+
+	[Fact]
+	public async Task Handle_ShouldReturnFailure_WhenArticleDoesNotExist()
+	{
+
+		// Arrange
+		var query = new GetArticleByIdForEditingQuery { Id = 1 };
+
+		// Act
+		var result = await _handler.Handle(query, CancellationToken.None);
+
+		// Assert
+		result.Success.Should().BeFalse();
+		result.Failure.Should().BeTrue();
+		result.Error.Should().Be("The article does not exist.");
 
 	}
 

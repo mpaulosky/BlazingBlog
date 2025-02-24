@@ -18,6 +18,8 @@ public class GetArticleByIdQueryHandlerTests
 
 	private readonly IArticleService _articleService;
 
+	private readonly IUserService _userService;
+
 	private readonly GetArticleByIdQueryHandler _handler;
 
 
@@ -28,7 +30,9 @@ public class GetArticleByIdQueryHandlerTests
 
 		_articleService = Substitute.For<IArticleService>();
 
-		_handler = new GetArticleByIdQueryHandler(_articleService, _userRepository);
+		_userService = Substitute.For<IUserService>();
+
+		_handler = new GetArticleByIdQueryHandler(_articleService, _userRepository , _userService);
 
 	}
 
@@ -77,14 +81,38 @@ public class GetArticleByIdQueryHandlerTests
 		// Arrange
 		var article = ArticleGenerator.Generate();
 		article.UserId = string.Empty;
-		
+
 		var articleResponse = article.Adapt<ArticleResponse>();
 		articleResponse.UserName = "Unknown";
 		articleResponse.CanEdit = false;
-		
+
 		var query = new GetArticleByIdQuery { Id = article.Id };
-		
+
 		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
+
+		// Act
+		var result = await _handler.Handle(query, CancellationToken.None);
+
+		// Assert
+		result.Should().NotBeNull();
+		result.Value.Should().BeEquivalentTo(articleResponse);
+
+	}
+
+	[Fact]
+	public async Task Handle_ShouldReturnArticleResponseWithUnknownUser_WhenUserServiceReturnsNull()
+	{
+
+		// Arrange
+		var article = ArticleGenerator.Generate();
+		var query = new GetArticleByIdQuery { Id = article.Id };
+
+		_articleService.GetArticleByIdAsync(query.Id).Returns(article);
+		_userRepository.GetUserByIdAsync(article.UserId).Returns((User?)null);
+
+		var articleResponse = article.Adapt<ArticleResponse>();
+		articleResponse.UserName = "Unknown";
+		articleResponse.CanEdit = false;
 
 		// Act
 		var result = await _handler.Handle(query, CancellationToken.None);

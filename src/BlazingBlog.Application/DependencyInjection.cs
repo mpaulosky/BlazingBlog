@@ -7,8 +7,6 @@
 // Project Name :  BlazingBlog.Application
 // =======================================================
 
-using BlazingBlog.Application.Articles;
-
 namespace BlazingBlog.Application;
 
 public static class DependencyInjection
